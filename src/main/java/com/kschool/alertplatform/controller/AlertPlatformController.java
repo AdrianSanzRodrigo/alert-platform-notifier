@@ -62,9 +62,17 @@ public class AlertPlatformController {
     public ResponseEntity<String>  updateAlertConfig(@AuthenticationPrincipal final User user,
                                                      @RequestBody AlertConfig alertConfig,
                                                      @PathVariable final String uuid){
-        AlertConfig alertConfigConfigSeted = alertConfigurationService.setAlertConfigFields(alertConfig, uuid, PUT_ACTION);
-        alertConfigurationService.sendAlertConfig(alertsConfigTopicName, alertConfigConfigSeted);
-        return new ResponseEntity<>("ok", HttpStatus.CREATED);
+        AlertConfig alertConfigSeted = alertConfigurationService.setAlertConfigFields(alertConfig, uuid, PUT_ACTION);
+        boolean isPresent = alertConfigurationService.isAlertPresent(alertConfigSeted, user.getClientId());
+        if (cbTemplate.getCouchbaseBucket().exists(user.getClientId()) && isPresent) {
+            alertConfigurationService.updateAlert(alertConfig, user.getClientId());
+            //alertConfigurationService.sendAlertConfig(alertsConfigTopicName, alertConfigConfigSeted);
+            return new ResponseEntity<>("ok", HttpStatus.CREATED);
+        }
+        else {
+            return new ResponseEntity<>("Document Id: " + user.getClientId() +
+                    " or alertConfigId: " + uuid + " does not exist", HttpStatus.NOT_MODIFIED);
+        }
     }
 
     @DeleteMapping(value = "/{uuid}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

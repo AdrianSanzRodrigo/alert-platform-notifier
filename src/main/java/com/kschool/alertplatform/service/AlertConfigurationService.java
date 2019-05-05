@@ -47,7 +47,7 @@ public class AlertConfigurationService {
     public AlertConfig getAlertConfigById(String alertId, String userId) {
         return findAlertsConfig(userId)
                 .stream().filter(alertConfigToDelete -> alertConfigToDelete.getId().equals(alertId))
-                .findFirst().orElseThrow(() -> new ValidationException(ValidationException.UUID_NOT_EXIST_ERROR + alertId));
+                .findFirst().orElseThrow(() -> new ValidationException(ValidationException.ID_NOT_EXIST_ERROR + alertId));
     }
 
     public List<AlertConfig> setAlertConfigFields(List<AlertConfig> alertConfigs, User user, String action) {
@@ -75,6 +75,17 @@ public class AlertConfigurationService {
         cbTemplate.getCouchbaseBucket().query(nq);
     }
 
+    public void updateAlert(AlertConfig alert, String docId) {
+        final JsonObject placeholderValues = JsonObject.create()
+                .put("alertId", alert.getId())
+                .put("docId", docId)
+                .put("threshold", alert.getThreshold())
+                .put("limitType", alert.getLimitType());
+
+        N1qlQuery nq = N1qlQuery.parameterized(getUpdateQuery(), placeholderValues);
+        cbTemplate.getCouchbaseBucket().query(nq);
+    }
+
     private String getInsertQuery(JsonObject alertObject) {
         return "INSERT INTO " + cbTemplate.getCouchbaseBucket().name() +
                 " (KEY, VALUE) VALUES ( $docId," +
@@ -82,10 +93,36 @@ public class AlertConfigurationService {
                 alertObject + "]})";
     }
 
+    public boolean isAlertPresent(AlertConfig alert, String docId) {
+        final JsonObject placeholderValues = JsonObject.create()
+                .put("alertId", alert.getId())
+                .put("docId", docId);
+
+        N1qlQuery nq = N1qlQuery.parameterized(getAlertIdPresenceQuery(), placeholderValues);
+
+        return (Boolean) cbTemplate.getCouchbaseBucket().query(nq).allRows().get(0).value().get("isPresent");
+    }
+
+    private String getUpdateQuery() {
+        return "UPDATE " + "`" + cbTemplate.getCouchbaseBucket().name() + "`" +
+                " USE KEYS $docId" +
+                " SET alertConfig.threshold = $threshold FOR alertConfig IN alertConfigs WHEN alertConfig.id = $alertId END, " +
+                "alertConfig.limitType = $limitType FOR alertConfig IN alertConfigs WHEN alertConfig.id = $alertId END " +
+                "RETURNING alertConfigs";
+    }
+
+    private String getAlertIdPresenceQuery() {
+        return "SELECT CASE WHEN st.isPresent IS NULL THEN FALSE " +
+                "ELSE st.isPresent END AS isPresent FROM " +
+                "(SELECT ARRAY_CONTAINS(idList, $alertId) isPresent FROM(" +
+                "SELECT ARRAY_AGG(alertConfig.id) as idList FROM " +
+                "`" + cbTemplate.getCouchbaseBucket().name() + "`" + " USE KEYS $docId" +
+                " UNNEST alertConfigs alertConfig) sq) st";
+    }
+
     private Timestamp getCurrentTimestamp() {
         Date date= new Date();
         long time = date.getTime();
-
         return new Timestamp(time);
     }
 }
