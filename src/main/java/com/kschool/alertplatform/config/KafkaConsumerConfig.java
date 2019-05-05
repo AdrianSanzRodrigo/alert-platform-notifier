@@ -15,7 +15,7 @@ import java.util.Map;
 
 @EnableKafka
 @Configuration
-public class AlertConsumerConfig {
+public class KafkaConsumerConfig {
 
     @Value(value = "${kafka.bootstrap.address}")
     private String bootstrapAddress;
