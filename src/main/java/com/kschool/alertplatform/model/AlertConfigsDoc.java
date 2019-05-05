@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document
-public class AlertsConfigDoc {
+public class AlertConfigsDoc {
 
     @Id
     public String id;
