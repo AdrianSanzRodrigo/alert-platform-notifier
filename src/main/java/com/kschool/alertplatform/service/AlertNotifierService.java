@@ -1,13 +1,31 @@
 package com.kschool.alertplatform.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AlertNotifierService {
 
-    @KafkaListener(topics = "alerts", groupId = "alert-platform")
+    @Value(value = "${email.receiver}")
+    private String emailReceiver;
+
+    @Value(value = "${email.subject}")
+    private String emailSubject;
+
+    @Autowired
+    public JavaMailSender emailSender;
+
+
+    @KafkaListener(topics = "${alerts.topic.name}", groupId = "alert-platform")
     public void sendEmail(String msg) {
-        System.out.println("A new alert has been received: " + msg);
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(emailReceiver);
+        message.setSubject(emailSubject);
+        message.setText("Alert received: " + msg);
+        emailSender.send(message);
     }
 }
