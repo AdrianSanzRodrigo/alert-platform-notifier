@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
 
 import static com.kschool.alertconfigaggregator.utils.KafkaUtils.*;
 
-public class AlertConfigAggregator {
+public class AlertConfigAggregatorApp {
 
-    static AlertLogger logger = new AlertLogger(AlertConfigAggregator.class.getName());
+    static AlertLogger logger = new AlertLogger(AlertConfigAggregatorApp.class.getName());
 
     public static void main(final String[] args) {
         try {

@@ -8,8 +8,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @EnableConfigurationProperties
 @EnableJwtAuthentication
 @SpringBootApplication
-public class AlertConfigurationApplication {
+public class AlertConfigurationApp {
 	public static void main(String[] args) {
-		SpringApplication.run(AlertConfigurationApplication.class, args);
+		SpringApplication.run(AlertConfigurationApp.class, args);
 	}
 }
