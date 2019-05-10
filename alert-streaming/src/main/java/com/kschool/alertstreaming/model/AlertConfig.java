@@ -1,4 +1,4 @@
-package com.kschool.alertconfiguration.model;
+package com.kschool.alertstreaming.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;

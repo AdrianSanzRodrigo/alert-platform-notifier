@@ -106,17 +106,18 @@ public class AlertConfigurationService {
         return couchbaseDAO.getBucket().exists(clientId) && isAlertConfigIdPresent(alertConfig, clientId);
     }
 
-    public List<AlertConfig> setAlertConfigFields(List<AlertConfig> alertConfigs, String action) {
+    public List<AlertConfig> setAlertConfigFields(List<AlertConfig> alertConfigs, String userId, String action) {
         return alertConfigs.stream().map(
                 alertConfig -> {
                     final String alertIdToSet = alertConfig.getSource() + "_" + UUID.randomUUID().toString();
-                    return setAlertConfigFields(alertConfig, alertIdToSet, action);
+                    return setAlertConfigFields(alertConfig, alertIdToSet, userId, action);
                 }
         ).collect(Collectors.toList());
     }
 
-    public AlertConfig setAlertConfigFields(AlertConfig alertConfig, String alertId, String action) {
+    public AlertConfig setAlertConfigFields(AlertConfig alertConfig, String alertId, String userId, String action) {
         alertConfig.setId(alertId);
+        alertConfig.setUserId(userId);
         alertConfig.setTimestamp(getCurrentTimestamp().toString());
         alertConfig.setAction(action);
         return alertConfig;

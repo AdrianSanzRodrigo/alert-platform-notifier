@@ -43,7 +43,7 @@ public class AlertPlatformController {
     @ResponseBody
     public ResponseEntity<List<AlertConfig>> createAlertConfig(@AuthenticationPrincipal final User user,
                                                                @RequestBody List<AlertConfig> alertConfigs){
-        List<AlertConfig> alertConfigsSeted = alertConfigurationService.setAlertConfigFields(alertConfigs, POST_ACTION);
+        List<AlertConfig> alertConfigsSeted = alertConfigurationService.setAlertConfigFields(alertConfigs, user.getClientId(), POST_ACTION);
         alertConfigurationService.insertAlertConfigs(alertConfigsSeted, user.getClientId());
         alertConfigurationService.sendAlertConfig(alertConfigsTopicName, alertConfigsSeted, user.getClientId());
         return new ResponseEntity<>(alertConfigsSeted, HttpStatus.OK);
@@ -54,7 +54,7 @@ public class AlertPlatformController {
     public ResponseEntity<String>  updateAlertConfig(@AuthenticationPrincipal final User user,
                                                      @RequestBody AlertConfig alertConfig,
                                                      @PathVariable final String uuid){
-        AlertConfig alertConfigSeted = alertConfigurationService.setAlertConfigFields(alertConfig, uuid, PUT_ACTION);
+        AlertConfig alertConfigSeted = alertConfigurationService.setAlertConfigFields(alertConfig, uuid, user.getClientId(), PUT_ACTION);
         boolean isPresent = alertConfigurationService.isAlertConfigPresent(alertConfigSeted, user.getClientId());
         if (isPresent) {
             alertConfigurationService.updateAlert(alertConfig, user.getClientId());
@@ -72,7 +72,7 @@ public class AlertPlatformController {
     public ResponseEntity<String> deleteAlertConfig(@AuthenticationPrincipal final User user,
                                                     @PathVariable final String uuid){
         AlertConfig alertConfigToDelete = alertConfigurationService.getAlertConfigById(uuid, user.getClientId());
-        AlertConfig alertConfigSeted = alertConfigurationService.setAlertConfigFields(alertConfigToDelete, uuid, DELETE_ACTION);
+        AlertConfig alertConfigSeted = alertConfigurationService.setAlertConfigFields(alertConfigToDelete, uuid, user.getClientId(), DELETE_ACTION);
         alertConfigurationService.deleteAlert(alertConfigSeted, user.getClientId());
         alertConfigurationService.sendAlertConfig(alertConfigsTopicName, alertConfigSeted, user.getClientId());
         return new ResponseEntity<>("ok", HttpStatus.OK);

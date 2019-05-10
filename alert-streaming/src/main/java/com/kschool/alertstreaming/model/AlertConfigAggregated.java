@@ -1,4 +1,4 @@
-package com.kschool.alertconfiguration.model;
+package com.kschool.alertstreaming.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class AlertConfig {
+public class AlertConfigAggregated {
 
     private String id;
 
@@ -22,6 +22,4 @@ public class AlertConfig {
     private String limitType;
 
     private String timestamp;
-
-    private String action;
 }
