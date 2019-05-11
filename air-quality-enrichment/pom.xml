@@ -5,13 +5,19 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.kschool.alertplatform</groupId>
-    <artifactId>alert-generator</artifactId>
+    <artifactId>air-quality-enrichment</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <description>Alert Config Aggregation streaming application</description>
+
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.kschool.alertplatform</groupId>
             <artifactId>alert-common</artifactId>
-            <version>1.0.1.RELEASE</version>
+            <version>1.0.0.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
