@@ -1,6 +1,7 @@
 package com.kschool.alertplatform.common.serdes;
 
 import com.google.gson.reflect.TypeToken;
+import com.kschool.alertplatform.common.model.Alert;
 import com.kschool.alertplatform.common.model.AlertConfig;
 import com.kschool.alertplatform.common.model.AlertConfigAggregated;
 import org.apache.kafka.common.utils.Bytes;
@@ -28,7 +29,12 @@ public class Serdes {
                     .withValueSerde(createJsonSerde(new TypeToken<Map<String, AlertConfig>>() {
                     }.getType()));
 
+    public static final Consumed<String, AlertConfig> alertsConfigAggregatedConsumer =
+            Consumed.with(org.apache.kafka.common.serialization.Serdes.String(),new JsonSerde<>(new TypeToken<List<AlertConfig>>(){}.getType()));
 
+    public static final Produced<String, List<Alert>> alertProducer =
+            Produced.with(org.apache.kafka.common.serialization.Serdes.String(),
+                    createJsonSerde(Alert.class));
 
     private static JsonSerde createJsonSerde(Type typeToDeserialize) {
         return new JsonSerde<>(new JsonSerializer(JsonDeserializer.gson), new JsonDeserializer(typeToDeserialize));
