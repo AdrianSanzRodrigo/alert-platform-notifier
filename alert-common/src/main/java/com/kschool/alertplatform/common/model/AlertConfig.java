@@ -17,7 +17,7 @@ public class AlertConfig {
 
     private String measure;
 
-    private String threshold;
+    private Double threshold;
 
     private String limitType;
 

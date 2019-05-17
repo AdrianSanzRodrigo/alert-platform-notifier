@@ -1,9 +1,7 @@
 package com.kschool.alertplatform.common.serdes;
 
 import com.google.gson.reflect.TypeToken;
-import com.kschool.alertplatform.common.model.Alert;
-import com.kschool.alertplatform.common.model.AlertConfig;
-import com.kschool.alertplatform.common.model.AlertConfigAggregated;
+import com.kschool.alertplatform.common.model.*;
 import org.apache.kafka.common.utils.Bytes;
 import org.apache.kafka.streams.Consumed;
 import org.apache.kafka.streams.kstream.Materialized;
@@ -29,12 +27,52 @@ public class Serdes {
                     .withValueSerde(createJsonSerde(new TypeToken<Map<String, AlertConfig>>() {
                     }.getType()));
 
-    public static final Consumed<String, AlertConfig> alertsConfigAggregatedConsumer =
-            Consumed.with(org.apache.kafka.common.serialization.Serdes.String(),new JsonSerde<>(new TypeToken<List<AlertConfig>>(){}.getType()));
+    public static Materialized<String, List<AlertConfigAggregated>, KeyValueStore<Bytes, byte[]>> alertsConfigMaterialization =
+            Materialized.<String, Map<String, AlertConfig>, KeyValueStore<Bytes, byte[]>>as("configaggregations")
+                    .withKeySerde(org.apache.kafka.common.serialization.Serdes.String())
+                    .withValueSerde(createJsonSerde(new TypeToken<List<AlertConfigAggregated>>() {
+                    }.getType()));
 
-    public static final Produced<String, List<Alert>> alertProducer =
+    public static final Consumed<String, List<AlertConfigAggregated>> alertsConfigAggregatedConsumer =
+            Consumed.with(org.apache.kafka.common.serialization.Serdes.String(),new JsonSerde<>(new TypeToken<List<AlertConfigAggregated>>(){}.getType()));
+
+    public static final Produced<String, Alert> alertProducer =
             Produced.with(org.apache.kafka.common.serialization.Serdes.String(),
                     createJsonSerde(Alert.class));
+
+    public static final Consumed<String, AirQualityRaw> airQualityRawConsumer =
+            Consumed.with(org.apache.kafka.common.serialization.Serdes.String(), createJsonSerde(AirQualityRaw.class));
+
+    public static final Produced<String, AirQualityEnriched> airQualityEnrichedProducer =
+            Produced.with(org.apache.kafka.common.serialization.Serdes.String(),
+                    createJsonSerde(AirQualityEnriched.class));
+
+    public static final Consumed<String, AirQualityEnriched> airQualityEnrichedConsumer =
+            Consumed.with(org.apache.kafka.common.serialization.Serdes.String(), createJsonSerde(AirQualityEnriched.class));
+
+    public static final Consumed<String, WeatherRaw> weatherRawConsumer =
+            Consumed.with(org.apache.kafka.common.serialization.Serdes.String(), createJsonSerde(WeatherRaw.class));
+
+    public static final Produced<String, WeatherEnriched> weatherEnrichedProducer =
+            Produced.with(org.apache.kafka.common.serialization.Serdes.String(),
+                    createJsonSerde(WeatherEnriched.class));
+
+    public static final Consumed<String, WeatherEnriched> weatherEnrichedConsumer =
+            Consumed.with(org.apache.kafka.common.serialization.Serdes.String(), createJsonSerde(WeatherEnriched.class));
+
+    public static final Consumed<String, TrafficDensityRaw> trafficDensityRawConsumer =
+            Consumed.with(org.apache.kafka.common.serialization.Serdes.String(), createJsonSerde(TrafficDensityRaw.class));
+
+    public static final Produced<String, TrafficDensityEnriched> trafficDensityEnrichedProducer =
+            Produced.with(org.apache.kafka.common.serialization.Serdes.String(),
+                    createJsonSerde(TrafficDensityEnriched.class));
+
+    public static final Consumed<String, TrafficDensityEnriched> trafficDensityEnrichedConsumer =
+            Consumed.with(org.apache.kafka.common.serialization.Serdes.String(), createJsonSerde(TrafficDensityEnriched.class));
+
+    public static final Produced<String, EnrichedEvents> eventsEnrichedProducer =
+            Produced.with(org.apache.kafka.common.serialization.Serdes.String(),
+                    createJsonSerde(EnrichedEvents.class));
 
     private static JsonSerde createJsonSerde(Type typeToDeserialize) {
         return new JsonSerde<>(new JsonSerializer(JsonDeserializer.gson), new JsonDeserializer(typeToDeserialize));
