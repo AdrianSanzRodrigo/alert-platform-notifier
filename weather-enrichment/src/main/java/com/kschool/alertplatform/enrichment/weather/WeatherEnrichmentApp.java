@@ -3,6 +3,7 @@ package com.kschool.alertplatform.enrichment.weather;
 import com.kschool.alertplatform.common.model.*;
 import com.kschool.alertplatform.common.serdes.Serdes;
 import com.kschool.alertplatform.common.utils.AlertLogger;
+import com.kschool.alertplatform.common.utils.PlatformLiterals;
 import com.kschool.alertplatform.common.utils.PropertyUtils;
 import org.apache.kafka.streams.StreamsBuilder;
 
@@ -29,10 +30,10 @@ public class WeatherEnrichmentApp {
     private static StreamsBuilder buildRuleEngineTopology(Properties topicNames) {
         final StreamsBuilder builder = new StreamsBuilder();
 
-        builder.stream(topicNames.getProperty("raw.weather.topic.name"), Serdes.weatherRawConsumer)
+        builder.stream(topicNames.getProperty(PlatformLiterals.WEATHER_RAW_TOPIC_NAME), Serdes.weatherRawConsumer)
                 .mapValues(WeatherEnrichmentApp::toEnrichedWeather)
                 .mapValues(event -> (EnrichedEvents) event)
-                .to(topicNames.getProperty("enriched.weather.topic.name"), Serdes.eventsEnrichedProducer);
+                .to(topicNames.getProperty(PlatformLiterals.WEATHER_ENRICHED_TOPIC_NAME), Serdes.eventsEnrichedProducer);
 
         return builder;
     }

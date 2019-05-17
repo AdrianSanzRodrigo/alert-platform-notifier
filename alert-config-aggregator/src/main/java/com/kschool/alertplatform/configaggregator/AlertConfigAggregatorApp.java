@@ -1,5 +1,6 @@
 package com.kschool.alertplatform.configaggregator;
 
+import com.kschool.alertplatform.common.utils.PlatformLiterals;
 import com.kschool.alertplatform.configaggregator.utils.AggregationUtils;
 import com.kschool.alertplatform.common.model.AlertConfig;
 import com.kschool.alertplatform.common.utils.AlertLogger;
@@ -26,8 +27,8 @@ public class AlertConfigAggregatorApp {
         try {
             Properties streamsConfiguration = PropertyUtils.loadConfig("/Users/n243985/alert-platform/alert-config-aggregator/src/main/resources/application.properties");
             final StreamsBuilder builder = buildTopology(
-                    streamsConfiguration.getProperty("alerts-config.topic.name"),
-                    streamsConfiguration.getProperty("aggregated.alerts-config.topic.name"));
+                    streamsConfiguration.getProperty(PlatformLiterals.ALERTS_CONFIG_TOPIC_NAME),
+                    streamsConfiguration.getProperty(PlatformLiterals.AGGREGATED_ALERTS_CONFIG_TOPIC_NAME));
             runKafkaStream(builder, streamsConfiguration);
         } catch (Exception e) {
             System.exit(-1);
