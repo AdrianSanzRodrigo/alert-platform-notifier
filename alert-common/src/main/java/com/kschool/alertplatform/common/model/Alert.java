@@ -1,27 +1,22 @@
 package com.kschool.alertplatform.common.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class AlertConfig {
+public class Alert {
 
     private String id;
 
-    private String userId;
+    private String title;
 
-    private String source;
+    private String description;
 
-    private String measure;
-
-    private Double threshold;
-
-    private String limitType;
-
-    private String timestamp;
-
-    private String action;
+    private String userIdToSend;
 }

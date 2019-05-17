@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import static com.kschool.alertplatform.common.serdes.Serdes.alertsConfigAggregatedProducer;
 import static com.kschool.alertplatform.common.serdes.Serdes.alertsConfigConsumer;
 import static com.kschool.alertplatform.common.serdes.Serdes.tableMaterialization;
+import static com.kschool.alertplatform.common.utils.KafkaUtils.runKafkaStream;
 import static com.kschool.alertplatform.configaggregator.utils.AggregationUtils.modifyCustomAlerts;
 
 public class AlertConfigAggregatorApp {
@@ -31,13 +32,6 @@ public class AlertConfigAggregatorApp {
         } catch (Exception e) {
             System.exit(-1);
         }
-    }
-
-    private static void runKafkaStream(StreamsBuilder builder, Properties kafkaConfig) {
-        final KafkaStreams streams = new KafkaStreams(builder.build(), kafkaConfig);
-        streams.cleanUp();
-        streams.start();
-        Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
     }
 
     private static StreamsBuilder buildTopology(String inputTopic, String outputTopic) {

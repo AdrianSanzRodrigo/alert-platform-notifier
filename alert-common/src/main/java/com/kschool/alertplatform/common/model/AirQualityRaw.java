@@ -1,4 +1,4 @@
-package com.kschool.alertplatform.configaggregator.model;
+package com.kschool.alertplatform.common.model;
 
 import lombok.Builder;
 import lombok.Data;
@@ -6,6 +6,10 @@ import lombok.Data;
 @Data
 @Builder
 public class AirQualityRaw {
+    public String estacion;
+    public String magnitud;
+    public String punto_muestreo;
+    /*
     public String estacion;
     public String magnitud;
     public String punto_muestreo;
@@ -60,4 +64,5 @@ public class AirQualityRaw {
     public String v23;
     public String h24;
     public String v24;
+    */
 }

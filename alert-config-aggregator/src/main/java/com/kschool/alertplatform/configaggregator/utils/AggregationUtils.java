@@ -10,13 +10,13 @@ public class AggregationUtils {
 
     public static AlertConfigAggregated createFromReadModel(AlertConfig readModel) {
         return AlertConfigAggregated.builder()
-                .id(readModel.getId() + " processed")
-                .userId(readModel.getUserId() + " processed")
-                .limitType(readModel.getLimitType() + " processed")
-                .measure(readModel.getMeasure() + " processed")
-                .source(readModel.getSource() + " processed")
-                .threshold(readModel.getThreshold() + " processed")
-                .timestamp(readModel.getTimestamp() + " processed").build();
+                .id(readModel.getId())
+                .userId(readModel.getUserId())
+                .limitType(readModel.getLimitType())
+                .measure(readModel.getMeasure())
+                .source(readModel.getSource())
+                .threshold(readModel.getThreshold())
+                .timestamp(readModel.getTimestamp()).build();
     }
 
     public static void modifyCustomAlerts(
