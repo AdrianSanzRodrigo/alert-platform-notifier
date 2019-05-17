@@ -3,6 +3,7 @@ package com.kschool.alertplatform.generator;
 import com.kschool.alertplatform.common.model.Alert;
 import com.kschool.alertplatform.common.model.AlertConfigAggregated;
 import com.kschool.alertplatform.common.utils.AlertLogger;
+import com.kschool.alertplatform.common.utils.PlatformLiterals;
 import com.kschool.alertplatform.common.utils.PropertyUtils;
 import com.kschool.alertplatform.common.model.EnrichedEvents;
 import com.kschool.alertplatform.generator.utils.GeneratorUtils;
@@ -38,16 +39,15 @@ public class AlertGeneratorApp {
         final StreamsBuilder builder = new StreamsBuilder();
 
         KTable<String, List<AlertConfigAggregated>> filtersByUserId =
-                builder.table(topicNames.getProperty("aggregated.alerts-config.topic.name"), alertsConfigAggregatedConsumer);
+                builder.table(topicNames.getProperty(PlatformLiterals.AGGREGATED_ALERTS_CONFIG_TOPIC_NAME), alertsConfigAggregatedConsumer);
 
-        logger.info("Es queryable: " + filtersByUserId.queryableStoreName());
         filtersByUserId.toStream().peek((key, value) ->logger.info("Filters key:" + key + " value: " + value));
 
         KStream<String, EnrichedEvents> enrichedEvents = getAllEnrichedEventsTopology(
                 builder,
-                topicNames.getProperty("enriched.air-quality.topic.name"),
-                topicNames.getProperty("enriched.traffic-density.topic.name"),
-                topicNames.getProperty("enriched.weather.topic.name"));
+                topicNames.getProperty(PlatformLiterals.AIR_QUALITY_ENRICHED_TOPIC_NAME),
+                topicNames.getProperty(PlatformLiterals.TRAFFIC_DENSITY_ENRICHED_TOPIC_NAME),
+                topicNames.getProperty(PlatformLiterals.WEATHER_ENRICHED_TOPIC_NAME));
 
         enrichedEvents.peek((key, value) ->logger.info("Enriched event key:" + key + " value: " + value));
 
@@ -56,7 +56,7 @@ public class AlertGeneratorApp {
                 GeneratorUtils::generateAlerts
         ).flatMap((key, value) -> value);
 
-        alertsToSend.to(topicNames.getProperty("alerts.topic.name"), alertProducer);
+        alertsToSend.to(topicNames.getProperty(PlatformLiterals.ALERTS_TOPIC_NAME), alertProducer);
 
         return builder;
     }
