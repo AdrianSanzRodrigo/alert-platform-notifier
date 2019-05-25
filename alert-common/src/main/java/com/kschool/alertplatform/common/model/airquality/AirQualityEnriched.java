@@ -3,13 +3,14 @@ package com.kschool.alertplatform.common.model.airquality;
 import com.kschool.alertplatform.common.model.EnrichedEvents;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Builder
+@NoArgsConstructor
 public class AirQualityEnriched extends EnrichedEvents {
-    public String source;
     public String station;
-    public String magnitude;
-    public String sampling_point;
-    public String date;
+    public AirQualityEnriched(String id, String source, String measure, Double value, String station, String timestamp) {
+        super(id, source, measure, value, timestamp);
+        this.station = station;
+    }
 }
