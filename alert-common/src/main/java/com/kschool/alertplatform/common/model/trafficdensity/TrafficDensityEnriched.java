@@ -7,9 +7,7 @@ import lombok.Data;
 @Data
 @Builder
 public class TrafficDensityEnriched extends EnrichedEvents {
-    public String source;
-    public String totalVehicles;
-    public String totalVehiclesStreet30;
-    public String avgSpeedTunnel;
-    public String avgSpeedRoad;
+    public TrafficDensityEnriched(String id, String source, String measure, Double value, String timestamp) {
+        super(id, source, measure, value, timestamp);
+    }
 }

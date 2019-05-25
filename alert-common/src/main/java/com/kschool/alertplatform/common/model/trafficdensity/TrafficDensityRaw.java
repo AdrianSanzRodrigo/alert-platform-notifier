@@ -3,12 +3,11 @@ package com.kschool.alertplatform.common.model.trafficdensity;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Builder
 public class TrafficDensityRaw {
-    public String totalVehiculosTunel;
-    public String totalVehiculosCalle30;
-    public String velocidadMediaTunel;
-    public String velicidadMediaSuperfice;
+    public List<DatoGlobal> datoGlobal;
 
 }
