@@ -2,10 +2,9 @@ package com.kschool.alertplatform.configaggregator;
 
 import com.kschool.alertplatform.common.utils.PlatformLiterals;
 import com.kschool.alertplatform.configaggregator.utils.AggregationUtils;
-import com.kschool.alertplatform.common.model.AlertConfig;
+import com.kschool.alertplatform.common.model.alert.AlertConfig;
 import com.kschool.alertplatform.common.utils.AlertLogger;
 import com.kschool.alertplatform.common.utils.PropertyUtils;
-import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsBuilder;
 
 import java.util.HashMap;

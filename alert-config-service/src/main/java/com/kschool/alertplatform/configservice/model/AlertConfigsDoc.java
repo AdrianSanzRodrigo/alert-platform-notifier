@@ -2,7 +2,7 @@ package com.kschool.alertplatform.configservice.model;
 
 import com.couchbase.client.java.repository.annotation.Field;
 import com.couchbase.client.java.repository.annotation.Id;
-import com.kschool.alertplatform.common.model.AlertConfig;
+import com.kschool.alertplatform.common.model.alert.AlertConfig;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package com.kschool.alertplatform.configservice.controller;
 
-import com.kschool.alertplatform.common.model.AlertConfig;
+import com.kschool.alertplatform.common.model.alert.AlertConfig;
 import com.kschool.alertplatform.security.domain.User;
 import com.kschool.alertplatform.configservice.service.AlertConfigurationService;
 import com.kschool.alertplatform.configservice.service.AlertNotifierService;
