@@ -1,4 +1,4 @@
-package com.kschool.alertplatform.common.model;
+package com.kschool.alertplatform.common.model.alert;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;

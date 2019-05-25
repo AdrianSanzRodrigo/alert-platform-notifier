@@ -1,7 +1,7 @@
 package com.kschool.alertplatform.generator.utils;
 
-import com.kschool.alertplatform.common.model.Alert;
-import com.kschool.alertplatform.common.model.AlertConfigAggregated;
+import com.kschool.alertplatform.common.model.alert.Alert;
+import com.kschool.alertplatform.common.model.alert.AlertConfigAggregated;
 import com.kschool.alertplatform.common.model.EnrichedEvents;
 import com.kschool.alertplatform.common.utils.AlertLogger;
 import org.apache.kafka.streams.KeyValue;

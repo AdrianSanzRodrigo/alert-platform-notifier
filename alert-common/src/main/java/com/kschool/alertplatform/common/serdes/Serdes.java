@@ -2,6 +2,15 @@ package com.kschool.alertplatform.common.serdes;
 
 import com.google.gson.reflect.TypeToken;
 import com.kschool.alertplatform.common.model.*;
+import com.kschool.alertplatform.common.model.airquality.AirQualityEnriched;
+import com.kschool.alertplatform.common.model.airquality.AirQualityRaw;
+import com.kschool.alertplatform.common.model.alert.Alert;
+import com.kschool.alertplatform.common.model.alert.AlertConfig;
+import com.kschool.alertplatform.common.model.alert.AlertConfigAggregated;
+import com.kschool.alertplatform.common.model.trafficdensity.TrafficDensityEnriched;
+import com.kschool.alertplatform.common.model.trafficdensity.TrafficDensityRaw;
+import com.kschool.alertplatform.common.model.weather.WeatherEnriched;
+import com.kschool.alertplatform.common.model.weather.WeatherRaw;
 import org.apache.kafka.common.utils.Bytes;
 import org.apache.kafka.streams.Consumed;
 import org.apache.kafka.streams.kstream.Materialized;
@@ -71,6 +80,10 @@ public class Serdes {
             Consumed.with(org.apache.kafka.common.serialization.Serdes.String(), createJsonSerde(TrafficDensityEnriched.class));
 
     public static final Produced<String, EnrichedEvents> eventsEnrichedProducer =
+            Produced.with(org.apache.kafka.common.serialization.Serdes.String(),
+                    createJsonSerde(EnrichedEvents.class));
+
+    public static final Produced<String, List<EnrichedEvents>> eventsEnrichedListProducer =
             Produced.with(org.apache.kafka.common.serialization.Serdes.String(),
                     createJsonSerde(EnrichedEvents.class));
 

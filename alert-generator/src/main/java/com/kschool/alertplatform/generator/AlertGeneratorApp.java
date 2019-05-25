@@ -1,13 +1,12 @@
 package com.kschool.alertplatform.generator;
 
-import com.kschool.alertplatform.common.model.Alert;
-import com.kschool.alertplatform.common.model.AlertConfigAggregated;
+import com.kschool.alertplatform.common.model.alert.Alert;
+import com.kschool.alertplatform.common.model.alert.AlertConfigAggregated;
 import com.kschool.alertplatform.common.utils.AlertLogger;
 import com.kschool.alertplatform.common.utils.PlatformLiterals;
 import com.kschool.alertplatform.common.utils.PropertyUtils;
 import com.kschool.alertplatform.common.model.EnrichedEvents;
 import com.kschool.alertplatform.generator.utils.GeneratorUtils;
-import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.KTable;
@@ -41,7 +40,7 @@ public class AlertGeneratorApp {
         KTable<String, List<AlertConfigAggregated>> filtersByUserId =
                 builder.table(topicNames.getProperty(PlatformLiterals.AGGREGATED_ALERTS_CONFIG_TOPIC_NAME), alertsConfigAggregatedConsumer);
 
-        filtersByUserId.toStream().peek((key, value) ->logger.info("Filters key:" + key + " value: " + value));
+        filtersByUserId.toStream().peek((key, value) -> logger.info("Filters key:" + key + " value: " + value));
 
         KStream<String, EnrichedEvents> enrichedEvents = getAllEnrichedEventsTopology(
                 builder,

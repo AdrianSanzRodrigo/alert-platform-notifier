@@ -2,7 +2,7 @@ package com.kschool.alertplatform.configservice.dao;
 
 import com.couchbase.client.java.Bucket;
 import com.couchbase.client.java.document.json.JsonObject;
-import com.kschool.alertplatform.common.model.AlertConfig;
+import com.kschool.alertplatform.common.model.alert.AlertConfig;
 import com.kschool.alertplatform.configservice.exceptions.AlertConfigNotFoundException;
 import com.kschool.alertplatform.configservice.model.AlertConfigsDoc;
 import org.springframework.beans.factory.annotation.Autowired;
