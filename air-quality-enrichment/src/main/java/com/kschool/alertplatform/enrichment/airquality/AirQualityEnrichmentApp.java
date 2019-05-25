@@ -55,7 +55,7 @@ public class AirQualityEnrichmentApp {
                 "airQuality",
                 magnitudeDict.get(event.getMAGNITUD()),
                 AirQualityUtils.getCorrespondingValue(event),
-                stationDict.get(event.getESTACION()),
+                stationDict.get(event.getPUNTO_MUESTREO().substring(0,8)),
                 getCurrentTimestamp().toString()));
         return airQualityEnrichedList;
 
