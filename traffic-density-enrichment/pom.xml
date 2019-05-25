@@ -6,7 +6,7 @@
 
     <groupId>com.kschool.alertplatform</groupId>
     <artifactId>traffic-density-enrichment</artifactId>
-    <version>1.0.0.RELEASE</version>
+    <version>1.0.1-SNAPSHOT</version>
     <description>Traffic Density Enrichment streaming microservice</description>
 
     <properties>

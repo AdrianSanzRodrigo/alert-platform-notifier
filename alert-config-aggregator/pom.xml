@@ -5,7 +5,7 @@
 
 	<groupId>com.kschool.alertplatform</groupId>
 	<artifactId>alert-config-aggregator</artifactId>
-	<version>1.0.0.RELEASE</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<name>alert-config-aggregator</name>
 	<description>Alert Config Aggregation streaming application</description>
 
