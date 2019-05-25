@@ -36,7 +36,7 @@ public class TrafficDensityEnrichmentApp {
         builder.stream(topicNames.getProperty(PlatformLiterals.TRAFFIC_DENSITY_RAW_TOPIC_NAME), Serdes.trafficDensityRawConsumer)
                 .filter((k, v) -> v != null)
                 .mapValues(TrafficDensityEnrichmentApp::toEnrichedTrafficDensity)
-                .mapValues(enrichWeather -> enrichWeather.stream().map(event -> (EnrichedEvents) event).collect(Collectors.toList()))
+                .mapValues(trafficDensity -> trafficDensity.stream().map(event -> (EnrichedEvents) event).collect(Collectors.toList()))
                 .selectKey((k,v) -> v.get(0).getSource())
                 .to(topicNames.getProperty(PlatformLiterals.TRAFFIC_DENSITY_ENRICHED_TOPIC_NAME), Serdes.eventsEnrichedListProducer);
 
