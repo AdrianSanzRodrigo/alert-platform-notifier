@@ -1,4 +1,4 @@
-package com.kschool.alertplatform.common.model;
+package com.kschool.alertplatform.common.model.airquality;
 
 import lombok.Builder;
 import lombok.Data;

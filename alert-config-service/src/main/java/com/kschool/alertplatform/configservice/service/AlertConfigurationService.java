@@ -4,7 +4,7 @@ import com.couchbase.client.java.document.json.JsonObject;
 import com.couchbase.client.java.query.N1qlQuery;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.kschool.alertplatform.common.model.AlertConfig;
+import com.kschool.alertplatform.common.model.alert.AlertConfig;
 import com.kschool.alertplatform.configservice.dao.CouchbaseDAO;
 import com.kschool.alertplatform.configservice.exceptions.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;

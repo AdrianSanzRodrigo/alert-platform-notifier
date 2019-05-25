@@ -1,5 +1,6 @@
-package com.kschool.alertplatform.common.model;
+package com.kschool.alertplatform.common.model.trafficdensity;
 
+import com.kschool.alertplatform.common.model.EnrichedEvents;
 import lombok.Builder;
 import lombok.Data;
 

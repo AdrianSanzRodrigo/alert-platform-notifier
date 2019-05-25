@@ -1,7 +1,7 @@
 package com.kschool.alertplatform.configaggregator.utils;
 
-import com.kschool.alertplatform.common.model.AlertConfig;
-import com.kschool.alertplatform.common.model.AlertConfigAggregated;
+import com.kschool.alertplatform.common.model.alert.AlertConfig;
+import com.kschool.alertplatform.common.model.alert.AlertConfigAggregated;
 
 import java.util.Map;
 import java.util.Objects;

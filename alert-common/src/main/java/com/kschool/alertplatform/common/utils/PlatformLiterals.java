@@ -13,4 +13,6 @@ public class PlatformLiterals {
     public static final String AIR_QUALITY_RAW_TOPIC_NAME = "raw.air-quality.topic.name";
     public static final String TRAFFIC_DENSITY_RAW_TOPIC_NAME = "raw.traffic-density.topic.name";
 
+    public static final String OPEN_WEATHER_API_KEY = "https://api.darksky.net/forecast/6ece3b408a49bf97ef08309d05355930/40.4167,-3.7037?exclude=minutely,hourly,daily,flags,alerts&units=si";
+
 }

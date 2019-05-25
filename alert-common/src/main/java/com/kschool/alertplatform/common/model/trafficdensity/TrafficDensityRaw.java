@@ -1,4 +1,4 @@
-package com.kschool.alertplatform.common.model;
+package com.kschool.alertplatform.common.model.trafficdensity;
 
 import lombok.Builder;
 import lombok.Data;

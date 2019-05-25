@@ -1,7 +1,6 @@
 package com.kschool.alertplatform.common.utils;
 
 import com.kschool.alertplatform.common.model.EnrichedEvents;
-import com.kschool.alertplatform.common.model.WeatherEnriched;
 import com.kschool.alertplatform.common.serdes.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsBuilder;
