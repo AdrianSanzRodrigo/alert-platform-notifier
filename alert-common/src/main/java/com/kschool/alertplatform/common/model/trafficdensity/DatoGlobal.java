@@ -1,14 +1,19 @@
 
 package com.kschool.alertplatform.common.model.trafficdensity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-@SuppressWarnings("unused")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DatoGlobal {
 
-    private String nombre;
-    private String fecha;
-    private String valor;
+    @JsonProperty("Nombre")
+    public String Nombre;
+    @JsonProperty("VALOR")
+    public String VALOR;
+    @JsonProperty("FECHA")
+    public String FECHA;
 
 }
