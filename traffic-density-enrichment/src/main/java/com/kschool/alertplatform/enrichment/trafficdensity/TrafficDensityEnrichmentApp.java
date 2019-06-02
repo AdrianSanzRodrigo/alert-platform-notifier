@@ -36,9 +36,10 @@ public class TrafficDensityEnrichmentApp {
         builder.stream(topicNames.getProperty(PlatformLiterals.TRAFFIC_DENSITY_RAW_TOPIC_NAME), Serdes.trafficDensityRawConsumer)
                 .filter((k, v) -> v != null)
                 .mapValues(TrafficDensityEnrichmentApp::toEnrichedTrafficDensity)
-                .mapValues(trafficDensity -> trafficDensity.stream().map(event -> (EnrichedEvents) event).collect(Collectors.toList()))
-                .selectKey((k,v) -> v.get(0).getSource())
-                .to(topicNames.getProperty(PlatformLiterals.TRAFFIC_DENSITY_ENRICHED_TOPIC_NAME), Serdes.eventsEnrichedListProducer);
+                .flatMapValues(v -> v)
+                .mapValues(event -> (EnrichedEvents) event)
+                .selectKey((k,v) -> v.getMeasure())
+                .to(topicNames.getProperty(PlatformLiterals.TRAFFIC_DENSITY_ENRICHED_TOPIC_NAME), Serdes.eventsEnrichedProducer);
 
         return builder;
     }
@@ -47,26 +48,32 @@ public class TrafficDensityEnrichmentApp {
         List<TrafficDensityEnriched> trafficDensityEnrichedList = new ArrayList<>();
         trafficDensityEnrichedList.add(new TrafficDensityEnriched(UUID.randomUUID().toString(),
                 "trafficDensity",
-                event.getDatoGlobal().get(0).getNombre(),
-                Double.parseDouble(event.getDatoGlobal().get(0).getVALOR()),
+                event.getDatosTrafico().getDatoGlobal().get(0).getNombre(),
+                Double.parseDouble(event.getDatosTrafico().getDatoGlobal().get(0).getVALOR()),
                 getCurrentTimestamp().toString()));
         trafficDensityEnrichedList.add(new TrafficDensityEnriched(UUID.randomUUID().toString(),
                 "trafficDensity",
-                event.getDatoGlobal().get(1).getNombre(),
-                Double.parseDouble(event.getDatoGlobal().get(1).getVALOR()),
+                event.getDatosTrafico().getDatoGlobal().get(1).getNombre(),
+                Double.parseDouble(event.getDatosTrafico().getDatoGlobal().get(1).getVALOR()),
                 getCurrentTimestamp().toString()));
         trafficDensityEnrichedList.add(new TrafficDensityEnriched(UUID.randomUUID().toString(),
                 "trafficDensity",
-                event.getDatoGlobal().get(2).getNombre(),
-                Double.parseDouble(event.getDatoGlobal().get(2).getVALOR()),
+                event.getDatosTrafico().getDatoGlobal().get(2).getNombre(),
+                Double.parseDouble(event.getDatosTrafico().getDatoGlobal().get(2).getVALOR()),
                 getCurrentTimestamp().toString()));
         trafficDensityEnrichedList.add(new TrafficDensityEnriched(UUID.randomUUID().toString(),
                 "trafficDensity",
-                event.getDatoGlobal().get(3).getNombre(),
-                Double.parseDouble(event.getDatoGlobal().get(3).getVALOR()),
+                changeNameIfNeeded(event.getDatosTrafico().getDatoGlobal().get(3).getNombre()),
+                Double.parseDouble(event.getDatosTrafico().getDatoGlobal().get(3).getVALOR()),
                 getCurrentTimestamp().toString()));
 
         return trafficDensityEnrichedList;
+    }
+
+    private static String changeNameIfNeeded(String name)  {
+            if(name.equals("velicidadMediaSuperfice")) {
+            return "velocidadMediaSuperfice";
+        } else return name;
     }
 
     private static Timestamp getCurrentTimestamp() {

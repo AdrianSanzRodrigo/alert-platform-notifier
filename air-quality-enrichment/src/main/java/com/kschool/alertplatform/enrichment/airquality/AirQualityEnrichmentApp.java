@@ -39,9 +39,9 @@ public class AirQualityEnrichmentApp {
         builder.stream(topicNames.getProperty(PlatformLiterals.AIR_QUALITY_RAW_TOPIC_NAME), Serdes.airQualityRawConsumer)
                 .filter((k, v) -> v != null)
                 .mapValues(AirQualityEnrichmentApp::toEnrichedAirQuality)
-                .mapValues(airQuality -> airQuality.stream().map(event -> (EnrichedEvents) event).collect(Collectors.toList()))
-                .selectKey((k,v) -> v.get(0).getSource())
-                .to(topicNames.getProperty(PlatformLiterals.AIR_QUALITY_ENRICHED_TOPIC_NAME), Serdes.eventsEnrichedListProducer);
+                .flatMapValues(v -> v)
+                .mapValues(event -> (EnrichedEvents) event).selectKey((k,v) -> v.getMeasure())
+                .to(topicNames.getProperty(PlatformLiterals.AIR_QUALITY_ENRICHED_TOPIC_NAME), Serdes.eventsEnrichedProducer);
 
         return builder;
     }
@@ -55,7 +55,7 @@ public class AirQualityEnrichmentApp {
                 "airQuality",
                 magnitudeDict.get(event.getMAGNITUD()),
                 AirQualityUtils.getCorrespondingValue(event),
-                stationDict.get(event.getPUNTO_MUESTREO().substring(0,8)),
+                stationDict.get(event.getPROVINCIA()+ event.getMUNICIPIO() + event.getESTACION()),
                 getCurrentTimestamp().toString()));
         return airQualityEnrichedList;
 

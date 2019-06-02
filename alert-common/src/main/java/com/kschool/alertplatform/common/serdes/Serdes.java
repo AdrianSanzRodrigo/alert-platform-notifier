@@ -67,6 +67,9 @@ public class Serdes {
             Produced.with(org.apache.kafka.common.serialization.Serdes.String(),
                     createJsonSerde(WeatherEnriched.class));
 
+    public static final Consumed<String, EnrichedEvents> eventsEnrichedConsumer =
+            Consumed.with(org.apache.kafka.common.serialization.Serdes.String(), createJsonSerde(EnrichedEvents.class));
+
     public static final Consumed<String, WeatherEnriched> weatherEnrichedConsumer =
             Consumed.with(org.apache.kafka.common.serialization.Serdes.String(), createJsonSerde(WeatherEnriched.class));
 

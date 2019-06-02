@@ -33,7 +33,7 @@ public class AlertConfigurationService {
     }
 
     public void sendAlertConfig(String topic, AlertConfig alertConfig, String clientId) {
-        kafkaTemplate.send(topic, clientId, alertConfig);
+        kafkaTemplate.send(topic, alertConfig.getMeasure(), alertConfig);
     }
 
     public List<AlertConfig> findAlertConfigs(String id) {

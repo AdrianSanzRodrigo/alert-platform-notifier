@@ -31,11 +31,16 @@ public class AlertConfigAggregated {
     public boolean matchAllFilters(EnrichedEvents enrichedEvent) {
         return enrichedEvent.getSource().equals(this.source)
                 && enrichedEvent.getMeasure().equals(this.measure)
-                && hasValidValue(enrichedEvent.getValue(), this.threshold);
+                && hasValidValue(enrichedEvent.getValue(), this.limitType, this.threshold);
     }
 
-    private static boolean hasValidValue(Double eventValue, Double filterThreshold) {
-        return isNullOrFulfillFilter(filterThreshold, () -> Math.abs(eventValue) >= filterThreshold);
+    private static boolean hasValidValue(Double eventValue, String limitType, Double filterThreshold) {
+        if (limitType.equals("upper")) {
+            return isNullOrFulfillFilter(filterThreshold, () -> Math.abs(eventValue) >= filterThreshold);
+        }
+        else {
+            return isNullOrFulfillFilter(filterThreshold, () -> Math.abs(eventValue) <= filterThreshold);
+        }
     }
 
     private static boolean isNullOrFulfillFilter(Object object, Supplier<Boolean> filter) {
