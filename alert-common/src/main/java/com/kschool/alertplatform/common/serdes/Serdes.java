@@ -21,6 +21,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
+
 public class Serdes {
 
     public static final Consumed<String, AlertConfig> alertsConfigConsumer =

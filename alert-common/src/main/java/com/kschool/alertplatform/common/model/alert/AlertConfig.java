@@ -1,7 +1,6 @@
 package com.kschool.alertplatform.common.model.alert;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Builder;
 import lombok.Data;
 
 @Data
