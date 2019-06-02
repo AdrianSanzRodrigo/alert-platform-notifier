@@ -21,6 +21,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
+
 public class Serdes {
 
     public static final Consumed<String, AlertConfig> alertsConfigConsumer =
@@ -65,6 +66,9 @@ public class Serdes {
     public static final Produced<String, WeatherEnriched> weatherEnrichedProducer =
             Produced.with(org.apache.kafka.common.serialization.Serdes.String(),
                     createJsonSerde(WeatherEnriched.class));
+
+    public static final Consumed<String, EnrichedEvents> eventsEnrichedConsumer =
+            Consumed.with(org.apache.kafka.common.serialization.Serdes.String(), createJsonSerde(EnrichedEvents.class));
 
     public static final Consumed<String, WeatherEnriched> weatherEnrichedConsumer =
             Consumed.with(org.apache.kafka.common.serialization.Serdes.String(), createJsonSerde(WeatherEnriched.class));

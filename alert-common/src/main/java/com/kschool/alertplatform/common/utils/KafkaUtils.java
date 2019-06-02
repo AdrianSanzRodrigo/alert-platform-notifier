@@ -38,6 +38,7 @@ public class KafkaUtils {
 
         KStream<String, EnrichedEvents> enrichedWeatherStream =
                 builder.stream(enrichedWeatherTopicName, Serdes.weatherEnrichedConsumer)
+                        .filter((key, event) -> event != null)
                         .mapValues(event -> event);
 
         return enrichedAirQualityStream.merge(enrichedTrafficDensityStream).merge(enrichedWeatherStream);

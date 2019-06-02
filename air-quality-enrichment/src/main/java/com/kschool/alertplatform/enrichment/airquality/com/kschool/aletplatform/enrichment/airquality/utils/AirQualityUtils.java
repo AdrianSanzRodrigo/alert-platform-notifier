@@ -56,13 +56,14 @@ public class AirQualityUtils {
     }
 
     public static Map<String, String> getMagnitudeDict() {
-        magnitudeDict.put("1", "Dióxido de Azufre");
-        magnitudeDict.put("6", "Monóxido de Carbono");
-        magnitudeDict.put("7", "Monóxido de Nitrógeno");
-        magnitudeDict.put("8", "Dióxido de Nitrógeno");
-        magnitudeDict.put("9", "Partículas < 2.5 µm");
+        magnitudeDict.put("01", "Dióxido de Azufre");
+        magnitudeDict.put("06", "Monóxido de Carbono");
+        magnitudeDict.put("07", "Monóxido de Nitrógeno");
+        magnitudeDict.put("08", "Dióxido de Nitrógeno");
+        magnitudeDict.put("09", "Partículas < 2.5 µm");
         magnitudeDict.put("10", "Partículas < 10 µm");
         magnitudeDict.put("12", "Óxidos de Nitrógeno");
+        magnitudeDict.put("14", "Ozono");
         magnitudeDict.put("20", "Tolueno");
         magnitudeDict.put("30", "Benceno");
         magnitudeDict.put("35", "Etilbenceno");

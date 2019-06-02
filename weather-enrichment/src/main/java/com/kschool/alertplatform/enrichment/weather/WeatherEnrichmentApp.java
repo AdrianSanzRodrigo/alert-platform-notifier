@@ -7,6 +7,7 @@ import com.kschool.alertplatform.common.serdes.Serdes;
 import com.kschool.alertplatform.common.utils.AlertLogger;
 import com.kschool.alertplatform.common.utils.PlatformLiterals;
 import com.kschool.alertplatform.common.utils.PropertyUtils;
+import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.StreamsBuilder;
 
 import java.sql.Timestamp;
@@ -36,9 +37,9 @@ public class WeatherEnrichmentApp {
         builder.stream(topicNames.getProperty(PlatformLiterals.WEATHER_RAW_TOPIC_NAME), Serdes.weatherRawConsumer)
                 .filter((k, v) -> v != null)
                 .mapValues(WeatherEnrichmentApp::toEnrichedWeather)
-                .mapValues(enrichWeather -> enrichWeather.stream().map(event -> (EnrichedEvents) event).collect(Collectors.toList()))
-                .selectKey((k,v) -> v.get(0).getSource())
-                .to(topicNames.getProperty(PlatformLiterals.WEATHER_ENRICHED_TOPIC_NAME), Serdes.eventsEnrichedListProducer);
+                .flatMapValues(v -> v)
+                .selectKey((k,v) -> v.getMeasure())
+                .to(topicNames.getProperty(PlatformLiterals.WEATHER_ENRICHED_TOPIC_NAME), Serdes.weatherEnrichedProducer);
 
         return builder;
     }
