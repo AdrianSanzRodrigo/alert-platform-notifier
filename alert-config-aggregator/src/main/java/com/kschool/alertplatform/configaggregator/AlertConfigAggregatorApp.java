@@ -7,6 +7,7 @@ import com.kschool.alertplatform.common.utils.AlertLogger;
 import com.kschool.alertplatform.common.utils.PropertyUtils;
 import org.apache.kafka.streams.StreamsBuilder;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -42,7 +43,7 @@ public class AlertConfigAggregatorApp {
                 (key, value, aggregate) -> updateOrLogError(aggregate, value),
                 tableMaterialization)
                 .toStream()
-                .mapValues(customNotifierOperation -> customNotifierOperation.entrySet().stream().map(Map.Entry::getValue).collect(Collectors.toList()))
+                .mapValues(customNotifierOperation -> new ArrayList<>(customNotifierOperation.values()))
                 .mapValues(customNotifiers -> customNotifiers.stream().map(AggregationUtils::createFromReadModel).collect(Collectors.toList()))
                 .to(outputTopic, alertsConfigAggregatedProducer);
         return builder;

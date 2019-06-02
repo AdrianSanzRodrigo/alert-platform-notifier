@@ -25,7 +25,7 @@ public class AlertNotifierService {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(emailReceiver);
         message.setSubject(emailSubject);
-        message.setText("Alert received: " + msg);
+        message.setText(msg);
         emailSender.send(message);
     }
 }

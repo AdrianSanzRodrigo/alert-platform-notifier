@@ -12,6 +12,7 @@ public class AirQualityRaw {
     public String ESTACION;
     public String MAGNITUD;
     public String PUNTO_MUESTREO;
+    public String NA;
     public String ANO;
     public String MES;
     public String DIA;

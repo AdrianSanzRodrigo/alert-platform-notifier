@@ -37,7 +37,7 @@ public class GeneratorUtils {
                     return new Alert(
                             alertConfig.getUserId() + UUID.randomUUID().toString(),
                             "Alert received in source: " + event.getSource(),
-                            "The measure: " + event.getMeasure() + " has reached the limit " + alertConfig.getThreshold() +
+                            "The measure: " + event.getMeasure() + ", has reached the limit " + alertConfig.getThreshold() +
                             " with value: " + event.getValue(),
                             alertConfig.getUserId());
                 })
