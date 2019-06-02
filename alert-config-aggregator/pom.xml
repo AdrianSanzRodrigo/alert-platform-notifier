@@ -5,7 +5,7 @@
 
 	<groupId>com.kschool.alertplatform</groupId>
 	<artifactId>alert-config-aggregator</artifactId>
-	<version>1.1.0-SNAPSHOT</version>
+	<version>1.1.0.RELEASE</version>
 	<name>alert-config-aggregator</name>
 	<description>Alert Config Aggregation streaming application</description>
 
@@ -17,7 +17,7 @@
 		<dependency>
 			<groupId>com.kschool.alertplatform</groupId>
 			<artifactId>alert-common</artifactId>
-			<version>1.1.0-SNAPSHOT</version>
+			<version>1.1.0.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
