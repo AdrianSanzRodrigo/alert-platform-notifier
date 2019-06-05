@@ -28,12 +28,8 @@ public class AlertConfigurationService {
 
     private static final Gson gson = new GsonBuilder().create();
 
-    public void sendAlertConfig(String topic, List<AlertConfig> alertConfigs, String clientId) {
-        alertConfigs.forEach(alertConfig -> sendAlertConfig(topic, alertConfig, clientId));
-    }
-
     public void sendAlertConfig(String topic, AlertConfig alertConfig, String clientId) {
-        kafkaTemplate.send(topic, alertConfig.getMeasure(), alertConfig);
+        kafkaTemplate.send(topic, clientId, alertConfig);
     }
 
     public List<AlertConfig> findAlertConfigs(String id) {
@@ -46,13 +42,15 @@ public class AlertConfigurationService {
                 .findFirst().orElseThrow(() -> new ValidationException(ValidationException.ID_NOT_EXIST_ERROR + alertId));
     }
 
-    public void insertAlertConfigs(List<AlertConfig> alertConfigs, String docId) {
+    public void insertAlertConfigs(String topic, List<AlertConfig> alertConfigs, String docId) {
         alertConfigs.forEach(alertConfig -> {
 
-            if (couchbaseDAO.getBucket().exists(docId) && !isAlertConfigIdPresent(alertConfig, docId)) {
+            if (couchbaseDAO.getBucket().exists(docId) && !isMeasurePresent(alertConfig, docId)) {
                 insertAlertConfig(alertConfig, docId);
+                sendAlertConfig(topic, alertConfig, docId);
             } else if (!couchbaseDAO.getBucket().exists(docId)) {
                 insertAlertConfigInNewDoc(alertConfig, docId);
+                sendAlertConfig(topic, alertConfig, docId);
             }
         });
     }
@@ -90,6 +88,16 @@ public class AlertConfigurationService {
 
         N1qlQuery nq = N1qlQuery.parameterized(String.valueOf(couchbaseDAO.getDeleteQuery()), placeholderValues);
         couchbaseDAO.getBucket().query(nq);
+    }
+
+    private boolean isMeasurePresent(AlertConfig alert, String docId) {
+        final JsonObject placeholderValues = JsonObject.create()
+                .put("measure", alert.getMeasure())
+                .put("docId", docId);
+
+        N1qlQuery nq = N1qlQuery.parameterized(couchbaseDAO.getMeasurePresenceQuery(), placeholderValues);
+
+        return (Boolean) couchbaseDAO.getBucket().query(nq).allRows().get(0).value().get("isPresent");
     }
 
     private boolean isAlertConfigIdPresent(AlertConfig alert, String docId) {

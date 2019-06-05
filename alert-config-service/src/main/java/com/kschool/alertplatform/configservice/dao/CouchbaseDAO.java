@@ -47,6 +47,17 @@ public class CouchbaseDAO {
                 " UNNEST alertConfigs alertConfig) sq) st";
     }
 
+    public String getMeasurePresenceQuery() {
+        return "SELECT CASE WHEN st.isPresent IS NULL THEN FALSE " +
+                "ELSE st.isPresent END AS isPresent FROM " +
+                "(SELECT ARRAY_CONTAINS(measureList, $measure) isPresent FROM(" +
+                "SELECT ARRAY_AGG(alertConfig.measure) as measureList FROM " +
+                "`" + getBucket().name() + "`" + " USE KEYS $docId" +
+                " UNNEST alertConfigs alertConfig) sq) st";
+    }
+
+
+
     public String getDeleteQuery() {
         return "UPDATE " +  "`" + getBucket().name() + "`" +
                 " USE KEYS $docId" +

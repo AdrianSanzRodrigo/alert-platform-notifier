@@ -26,6 +26,11 @@ public class AlertNotifierService {
         message.setTo(emailReceiver);
         message.setSubject(emailSubject);
         message.setText(msg);
-        emailSender.send(message);
+        try {
+            emailSender.send(message);
+        }
+        catch (Exception e) {
+            System.console().printf("Error while sending");
+        }
     }
 }

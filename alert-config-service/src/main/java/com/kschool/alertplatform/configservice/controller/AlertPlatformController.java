@@ -44,8 +44,7 @@ public class AlertPlatformController {
     public ResponseEntity<List<AlertConfig>> createAlertConfig(@AuthenticationPrincipal final User user,
                                                                @RequestBody List<AlertConfig> alertConfigs){
         List<AlertConfig> alertConfigsSeted = alertConfigurationService.setAlertConfigFields(alertConfigs, user.getClientId(), POST_ACTION);
-        alertConfigurationService.insertAlertConfigs(alertConfigsSeted, user.getClientId());
-        alertConfigurationService.sendAlertConfig(alertConfigsTopicName, alertConfigsSeted, user.getClientId());
+        alertConfigurationService.insertAlertConfigs(alertConfigsTopicName, alertConfigsSeted, user.getClientId());
         return new ResponseEntity<>(alertConfigsSeted, HttpStatus.OK);
     }
 

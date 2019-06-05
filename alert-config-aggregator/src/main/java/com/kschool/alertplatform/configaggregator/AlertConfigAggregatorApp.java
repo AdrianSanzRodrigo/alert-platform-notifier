@@ -38,6 +38,9 @@ public class AlertConfigAggregatorApp {
     private static StreamsBuilder buildTopology(String inputTopic, String outputTopic) {
         final StreamsBuilder builder = new StreamsBuilder();
         builder.stream(inputTopic, alertsConfigConsumer)
+                .peek((k,v) -> logger.info("New filter in measure: " + v.getMeasure()
+                        + " with action: " + v.getAction()
+                        + " and threshold: " + v.getThreshold()))
                 .groupByKey().aggregate(
                 HashMap::new,
                 (key, value, aggregate) -> updateOrLogError(aggregate, value),

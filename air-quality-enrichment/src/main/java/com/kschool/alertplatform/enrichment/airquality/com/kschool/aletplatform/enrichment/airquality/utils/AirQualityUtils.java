@@ -106,7 +106,12 @@ public class AirQualityUtils {
         values.put("H24", event.getH24());
 
         Calendar rightNow = Calendar.getInstance();
-        String value = "H" + rightNow.get(Calendar.HOUR_OF_DAY);
-        return Double.parseDouble(values.get(value));
+        if(rightNow.get(Calendar.HOUR_OF_DAY) == 0) {
+            return Double.parseDouble(values.get("H24"));
+        }
+        else {
+            String value = "H" + (rightNow.get(Calendar.HOUR_OF_DAY));
+            return Double.parseDouble(values.get(value));
+        }
     }
 }

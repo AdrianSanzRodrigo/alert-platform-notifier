@@ -55,8 +55,6 @@ public class AlertGeneratorApp {
                 topicNames.getProperty(PlatformLiterals.WEATHER_ENRICHED_TOPIC_NAME))
                 .filter((k, v) -> v != null);
 
-        enrichedEvents.peek((key, value) -> logger.info("Enriched event key:" + key + " value: " + value));
-
         KStream<String, Alert> alertsToSend = enrichedEvents.join(
                 filtersByMeasure,
                 GeneratorUtils::generateAlerts
