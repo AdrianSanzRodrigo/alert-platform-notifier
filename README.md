@@ -77,6 +77,8 @@ Por último, esta capa se encarga de representar en tiempo real información val
 | DIA | String |
 | Hx | String |
 | Vx | Double |
+
+
 Siendo Hx y Vx cada x correspondiente a una hora del día. El mapeo de los campos *MAGNITUD*  y *PUNTO_MUESTREO* se han realizado conforme al siguiente [documento](https://datos.madrid.es/FWProjects/egob/Catalogo/MedioAmbiente/Aire/Ficheros/Interprete_ficheros_%20calidad_%20del_%20aire_global.pdf).
 
 #### AirQualityEnriched
