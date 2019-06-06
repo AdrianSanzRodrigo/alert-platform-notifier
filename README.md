@@ -4,8 +4,8 @@
 
 **MADLERT** es una plataforma analítica en tiempo real que informa del estado de diferentes agentes relacionados con la *contaminación en la ciudad de **Madrid** (calidad del aire, tiempo, densidad de tráfico). Las principales funciones de la plataforma son:
 
-  - Dispone de un servicio de configuración de alertas para cada medición deseada.
-  - Notifica en tiempo real al usuario por email cuando una medida supera al límite establecido en la configuración de la alerta.
+  - Servicio de configuración de alertas para cada medición deseada.
+  - Servicio de notificaciones de alertas en tiempo real al usuario por email cuando una medida supera el límite establecido en la configuración de la alerta.
   - Generación de dashboards en tiempo real del estado de las mediciones, así como la posibilidad de crear dashboards personalizados.
 
 # Arquitectura
